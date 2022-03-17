@@ -5,7 +5,7 @@ on:
       AZURE_REGION: 
         description: 'Azure Region to deploy Azure resources'
         required: true    
-        default: 'syd'  
+        default: 'australiaeast'  
       ENVIRONMENT_TYPE: 
         description: 'Environment: dev, test, or prod'
         required: true
