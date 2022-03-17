@@ -17,7 +17,7 @@ on:
       RESOURCE_GROUP_NAME:
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'serverless-test'
+        default: 'resource-group'
       MSI_NAME:
         description: 'User Managed Identity'
         required: true
