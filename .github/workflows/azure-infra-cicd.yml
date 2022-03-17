@@ -14,18 +14,18 @@ on:
         description: 'Prefix to be used in naming Azure resources'
         required: true
         default: 'prefix'
-      RESOURCE_GROUP_NAME: 
+      RESOURCE_GROUP_NAME:
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'resource-group'
-      MSI_NAME: 
+        default: 'serverless-test'
+      MSI_NAME:
         description: 'User Managed Identity'
         required: true
-        default: 'user-msi'
-      MSI_RESOURCE_GROUP: 
+        default: 'dev'
+      MSI_RESOURCE_GROUP:
         description: 'Resource Group where User Managed Identity is located'
         required: true
-        default: 'msi-resource-group'
+        default: 'serverless-test'
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
@@ -65,7 +65,7 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         # Azure CLI version to be used to execute the script. If not provided, latest version is used
-        azcliversion: 2.27.2
+        #azcliversion: 2.27.2
         # Specify the script here
         inlineScript: |
           az group create -l ${{ env.AZURE_REGION }} -n ${{ env.RESOURCE_GROUP_NAME }}

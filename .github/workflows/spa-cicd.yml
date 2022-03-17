@@ -6,14 +6,14 @@ on:
         description: 'Environment: dev, test, or prod'
         required: true
         default: 'dev'
-      APP_NAME_PREFIX: 
+      APP_NAME_PREFIX:
         description: 'Prefix to be used in naming Azure resources'
         required: true
-        default: 'prefix'
-      RESOURCE_GROUP_NAME: 
+        default: 'lachy'
+      RESOURCE_GROUP_NAME:
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'resource-group'
+        default: 'serverless-test'
       CLIENT_URL: 
         description: 'Client URL'
         required: true
@@ -118,7 +118,7 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         # Azure CLI version to be used to execute the script. If not provided, latest version is used
-        azcliversion: 2.21.0
+        #azcliversion: 2.21.0
         # Specify the script here
         inlineScript: az storage blob upload-batch -s ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/dist -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }}
 
@@ -126,7 +126,7 @@ jobs:
     - name: Purge CDN endpoint on ${{ env.CDN_ENDPOINT_NAME }}
       uses: Azure/cli@1.0.4
       with:
-        azcliversion: 2.21.0
+        #azcliversion: 2.21.0
         inlineScript: |
            az cdn endpoint purge --content-paths  "/*" --profile-name ${{ env.CDN_PROFILE_NAME }} --name ${{ env.CDN_ENDPOINT_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }}
 
