@@ -45,7 +45,7 @@ resource deploymentScripts 'Microsoft.Resources/deploymentScripts@2020-10-01' = 
   properties: {
     azPowerShellVersion: '6.1'
     timeout: 'PT30M'
-    arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name} -subscriptionName ${subscription().subscriptionId}'
+    arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name} -subscriptionId ${subscription().subscriptionId}'
     scriptContent: '''
       param([string] $storageAccount, [string] $resourceGroup, [string] $subscriptionId)
       Select-AzSubscription -SubscriptionId $subscriptionId
