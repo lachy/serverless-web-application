@@ -21,7 +21,7 @@ on:
       API_DOCUMENT_URL: 
         description: 'API definition URL'
         required: true
-        default: 'https://<fuction-name>.azurewebsites.net/api/swagger.json'
+        default: 'https://fnlachytest.azurewebsites.net/api/swagger.json'
       APIM_NAME: 
         description: 'APIM name'
         required: true
@@ -29,11 +29,11 @@ on:
       FUNCTION_NAME: 
         description: 'Azure Functions name'
         required: true
-        default: 'function-name'
+        default: 'fnlachytest'
       ORIGIN_URL: 
         description: 'Client app URL' # This is CDN endpoint URL
         required: true
-        default: 'https://<cdn-endpoint-name>.azureedge.net'               
+        default: 'https://cdnlachytest.azureedge.net'               
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions

@@ -120,7 +120,7 @@ jobs:
         # Azure CLI version to be used to execute the script. If not provided, latest version is used
         #azcliversion: 2.21.0
         # Specify the script here
-        inlineScript: az storage blob upload-batch -s ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/dist -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }} --connection-string DefaultEndpointsProtocol=https;AccountName=lachydev;AccountKey=ucWol4xk3MTNgcvztHZFmRjPqO7A1c/+/ADNFD+lEWTZwGryRdlVLaAej5ZJBm3wt+m3Bk37lLqAumghKdJ+6g==;EndpointSuffix=core.windows.net
+        inlineScript: az storage blob upload-batch -s ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/dist -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }}
 
     # Purge CDN endpoint
     - name: Purge CDN endpoint on ${{ env.CDN_ENDPOINT_NAME }}
