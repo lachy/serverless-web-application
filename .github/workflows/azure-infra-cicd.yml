@@ -13,11 +13,11 @@ on:
       APP_NAME_PREFIX: 
         description: 'Prefix to be used in naming Azure resources'
         required: true
-        default: 'lachy'
+        default: 'serverless'
       RESOURCE_GROUP_NAME: 
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'resource-group'
+        default: 'serverless-rg'
       MSI_NAME: 
         description: 'User Managed Identity'
         required: true

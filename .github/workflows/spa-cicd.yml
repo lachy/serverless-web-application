@@ -9,31 +9,31 @@ on:
       APP_NAME_PREFIX: 
         description: 'Prefix to be used in naming Azure resources'
         required: true
-        default: 'lachy'
+        default: 'serverless'
       RESOURCE_GROUP_NAME: 
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'resource-group'
+        default: 'serverless-rg'
       CLIENT_URL: 
         description: 'Client URL'
         required: true
-        default: 'https://cdnlachytest.azureedge.net'
+        default: 'https://serverlesstest-cdn.azureedge.net'
       API_URL: 
         description: 'API on APIM URL'
         required: true
-        default: 'https://apim-lachytest.azure-api.net/<api-name>'
+        default: 'https://serverlesstest-apim.azure-api.net/myapi'
       AZURE_STORAGE_NAME: 
         description: 'Azure storage account name'
         required: true
-        default: 'lachystorage'
+        default: 'serverlesstest'
       CDN_PROFILE_NAME: 
         description: 'CDN profile name'
         required: true
-        default: 'cdn-lachy'
+        default: 'serverlesstest'
       CDN_ENDPOINT_NAME: 
         description: 'CDN endpoint name'
         required: true
-        default: 'cdn-endpoint-lachy'
+        default: 'cdn-endpoint-name'
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
