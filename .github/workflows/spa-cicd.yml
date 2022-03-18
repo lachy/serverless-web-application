@@ -13,7 +13,7 @@ on:
       RESOURCE_GROUP_NAME: 
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'serverless-rg'
+        default: 'serverless'
       CLIENT_URL: 
         description: 'Client URL'
         required: true
