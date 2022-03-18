@@ -25,7 +25,7 @@ on:
       APIM_NAME: 
         description: 'APIM name'
         required: true
-        default: 'apim-name'
+        default: 'apim-lachytest'
       FUNCTION_NAME: 
         description: 'Azure Functions name'
         required: true
