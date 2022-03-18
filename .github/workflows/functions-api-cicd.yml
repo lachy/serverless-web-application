@@ -13,7 +13,7 @@ on:
       RESOURCE_GROUP_NAME:
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'resource-group'
+        default: 'lachy-dev-rg'
       API_NAME: 
         description: 'API name'
         required: true
@@ -25,15 +25,15 @@ on:
       APIM_NAME: 
         description: 'APIM name'
         required: true
-        default: 'apim-name'
+        default: 'apim-lachy-dev'
       FUNCTION_NAME: 
         description: 'Azure Functions name'
         required: true
-        default: 'function-name'
+        default: 'lachy-func-app'
       ORIGIN_URL: 
         description: 'Client app URL' # This is CDN endpoint URL
         required: true
-        default: 'https://<cdn-endpoint-name>.azureedge.net'              
+        default: 'https://lachy-func-app.azureedge.net'              
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions

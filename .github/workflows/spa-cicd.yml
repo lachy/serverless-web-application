@@ -13,15 +13,15 @@ on:
       RESOURCE_GROUP_NAME:
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'resource-group'
+        default: 'lachy-dev-rg'
       CLIENT_URL: 
         description: 'Client URL'
         required: true
-        default: 'https://<cdn-endpoint-name>.azureedge.net'
+        default: 'https://lachy-to-test.azureedge.net'
       API_URL: 
         description: 'API on APIM URL'
         required: true
-        default: 'https://<apim-name>.azure-api.net/<api-name>'
+        default: 'https://apim-lachy-dev.azure-api.net/apim-lachy-dev'
       AZURE_STORAGE_NAME: 
         description: 'Azure storage account name'
         required: true
