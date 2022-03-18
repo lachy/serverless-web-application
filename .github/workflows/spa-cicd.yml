@@ -6,22 +6,22 @@ on:
         description: 'Environment: dev, test, or prod'
         required: true
         default: 'dev'
-      APP_NAME_PREFIX:
+      APP_NAME_PREFIX: 
         description: 'Prefix to be used in naming Azure resources'
         required: true
         default: 'lachy'
-      RESOURCE_GROUP_NAME:
+      RESOURCE_GROUP_NAME: 
         description: 'Resource Group to deploy Azure resources'
         required: true
-        default: 'lachy-dev-rg'
+        default: 'resource-group'
       CLIENT_URL: 
         description: 'Client URL'
         required: true
-        default: 'https://lachy-to-test.azureedge.net'
+        default: 'https://<cdn-endpoint-name>.azureedge.net'
       API_URL: 
         description: 'API on APIM URL'
         required: true
-        default: 'https://apim-lachy-dev.azure-api.net/apim-lachy-dev'
+        default: 'https://<apim-name>.azure-api.net/<api-name>'
       AZURE_STORAGE_NAME: 
         description: 'Azure storage account name'
         required: true
@@ -33,7 +33,7 @@ on:
       CDN_ENDPOINT_NAME: 
         description: 'CDN endpoint name'
         required: true
-        default: 'cdn-endpoint-name'                        
+        default: 'cdn-endpoint-name'
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions

@@ -14,18 +14,18 @@ on:
         description: 'Prefix to be used in naming Azure resources'
         required: true
         default: 'lachy'
-      RESOURCE_GROUP_NAME:
+      RESOURCE_GROUP_NAME: 
         description: 'Resource Group to deploy Azure resources'
         required: true
         default: 'resource-group'
-      MSI_NAME:
+      MSI_NAME: 
         description: 'User Managed Identity'
         required: true
         default: 'dev'
-      MSI_RESOURCE_GROUP:
+      MSI_RESOURCE_GROUP: 
         description: 'Resource Group where User Managed Identity is located'
         required: true
-        default: 'serverless-test'
+        default: 'lachy-dev-rg'
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
