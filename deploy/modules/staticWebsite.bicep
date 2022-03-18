@@ -45,10 +45,9 @@ resource deploymentScripts 'Microsoft.Resources/deploymentScripts@2020-10-01' = 
   properties: {
     azPowerShellVersion: '6.1'
     timeout: 'PT30M'
-    arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name} -subscriptionId ${subscription().subscriptionId}'
+    arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name}'
     scriptContent: '''
       param([string] $storageAccount, [string] $resourceGroup, [string] $subscriptionId)
-      Get-AzSubscription -SubscriptionId '5453a1dd-2c4e-4a10-877c-37448393dadb' | Set-AzContext
       $DefaultProfile = Connect-AzAccount -Tenant '8a1c7687-6b2c-4c29-880d-6c241bd6fb97' -SubscriptionId '5453a1dd-2c4e-4a10-877c-37448393dadb'
       $storage = Get-AzStorageAccount -DefaultProfile $DefaultProfile -ResourceGroupName $resourceGroup -Name $storageAccount
       $ctx = $storage.Context
