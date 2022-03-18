@@ -45,9 +45,10 @@ resource deploymentScripts 'Microsoft.Resources/deploymentScripts@2020-10-01' = 
   properties: {
     azPowerShellVersion: '6.1'
     timeout: 'PT30M'
-    arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name}'
+    arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name} -subscriptionName ${subscription().id}'
     scriptContent: '''
-      param([string] $storageAccount, [string] $resourceGroup)
+      param([string] $storageAccount, [string] $resourceGroup, [string] $subscriptionId)
+      $subscription = Select-AzureSubscription $subscriptionId
       $storage = Get-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccount
       $ctx = $storage.Context
       Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument index.html -ErrorDocument404Path notfound.html
