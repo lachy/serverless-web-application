@@ -48,7 +48,7 @@ resource deploymentScripts 'Microsoft.Resources/deploymentScripts@2020-10-01' = 
     arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name} -subscriptionName ${subscription().id}'
     scriptContent: '''
       param([string] $storageAccount, [string] $resourceGroup, [string] $subscriptionId)
-      $subscription = Get-AzSubscription -SubscriptionId $subscriptionId
+      Select-AzSubscription -SubscriptionId $subscriptionId
       $storage = Get-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccount
       $ctx = $storage.Context
       Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument index.html -ErrorDocument404Path notfound.html
