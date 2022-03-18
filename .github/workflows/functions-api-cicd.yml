@@ -21,7 +21,7 @@ on:
       API_DOCUMENT_URL: 
         description: 'API definition URL'
         required: true
-        default: 'https://<fuction-name>.azurewebsites.net/api/swagger.json'
+        default: 'https://lachy-func-app.azurewebsites.net/api/swagger.json'
       APIM_NAME: 
         description: 'APIM name'
         required: true
