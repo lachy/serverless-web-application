@@ -47,11 +47,10 @@ resource deploymentScripts 'Microsoft.Resources/deploymentScripts@2020-10-01' = 
     timeout: 'PT30M'
     arguments: '-storageAccount ${storageAccount.name} -resourceGroup ${resourceGroup().name}'
     scriptContent: '''
-      param([string] $storageAccount, [string] $resourceGroup, [string] $subscriptionId)
-      $DefaultProfile = Connect-AzAccount -Tenant '8a1c7687-6b2c-4c29-880d-6c241bd6fb97' -SubscriptionId '5453a1dd-2c4e-4a10-877c-37448393dadb'
-      $storage = Get-AzStorageAccount -DefaultProfile $DefaultProfile -ResourceGroupName $resourceGroup -Name $storageAccount
+      param([string] $storageAccount, [string] $resourceGroup)
+      $storage = Get-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccount
       $ctx = $storage.Context
-      Enable-AzStorageStaticWebsite -DefaultProfile $DefaultProfile -Context $ctx -IndexDocument index.html -ErrorDocument404Path notfound.html
+      Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument index.html -ErrorDocument404Path notfound.html
       $output = $storage.PrimaryEndpoints.Web
       $output = $output.TrimEnd('/')
       $DeploymentScriptOutputs = @{}
