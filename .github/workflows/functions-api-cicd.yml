@@ -21,7 +21,7 @@ on:
       API_DOCUMENT_URL: 
         description: 'API definition URL'
         required: true
-        default: 'https://serverless-dev.azureedge.net/swagger.json'
+        default: 'https://fn-serverless-dev.azurewebsites.net/api/swagger.json'
       APIM_NAME: 
         description: 'APIM name'
         required: true
