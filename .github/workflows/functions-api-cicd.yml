@@ -34,10 +34,6 @@ on:
         description: 'Client app URL' # This is CDN endpoint URL
         required: true
         default: 'https://serverless-dev.azureedge.net'
-      AZURE_STORAGE_NAME: 
-        description: 'Azure storage account name'
-        required: true
-        default: 'serverlessdev'
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
@@ -90,37 +86,6 @@ jobs:
         pushd ./${{ env.APP_SOURCE_PATH }}/${{ env.FUNCTIONAPP_PATH }}
         dotnet build --configuration Release --output ./outputs
         popd
-
-    - name: Generate OpenAPI document
-      shell: pwsh
-      env:
-        OpenApi__HostNames: 'https://${{ env.API_NAME }}.azurewebsites.net/api'
-        AZURE_FUNCTIONS_ENVIRONMENT: 'Production'
-      run: |
-        pushd ./${{ env.APP_SOURCE_PATH }}/${{ env.FUNCTIONAPP_PATH }}
-
-        # Create local.settings.json
-        cp ./local.settings.sample.json ./local.settings.json
-
-        cd ./outputs
-
-        Start-Process -NoNewWindow func @("start","--verbose","false")
-        Start-Sleep -s 60
-
-        Invoke-RestMethod -Method Get -Uri http://localhost:7071/api/swagger.json | ConvertTo-Json -Depth 100 | Out-File -FilePath outputs/swagger.json -Force
-
-        Get-Content -Path outputs/swagger.json -Raw
-
-        popd
-
-    # Deploy swagger doc to the storage account
-    - name: Publish swagger doc storage account ${{ env.AZURE_STORAGE_NAME }}
-      uses: Azure/cli@1.0.4
-      with:
-        # Azure CLI version to be used to execute the script. If not provided, latest version is used
-        #azcliversion: 2.21.0
-        # Specify the script here
-        inlineScript: az storage blob upload -s ./${{ env.FUNCTION_NAME }}/outputs/swagger.json -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }} --overwrite true
 
     # Publish .NET application to Azure Function
     - name: Publish to Azure Functions to ${{ env.FUNCTION_NAME }}
