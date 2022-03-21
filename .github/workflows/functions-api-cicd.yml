@@ -94,10 +94,10 @@ jobs:
     - name: Generate OpenAPI document
       shell: pwsh
       env:
-        OpenApi__HostNames: 'https://<azure-functions-app>.azurewebsites.net/api'
+        OpenApi__HostNames: 'https://${{ env.API_NAME }}.azurewebsites.net/api'
         AZURE_FUNCTIONS_ENVIRONMENT: 'Production'
       run: |
-        cd src/api/dotnet/${{ env.FUNCTION_NAME }}
+        pushd ./${{ env.APP_SOURCE_PATH }}/${{ env.FUNCTIONAPP_PATH }}
 
         mkdir outputs
 
@@ -111,7 +111,7 @@ jobs:
 
         Get-Content -Path outputs/swagger.json -Raw
 
-        cd ../../../../
+        popd
 
     # Deploy swagger doc to the storage account
     - name: Publish swagger doc storage account ${{ env.AZURE_STORAGE_NAME }}
