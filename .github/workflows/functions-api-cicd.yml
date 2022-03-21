@@ -102,7 +102,7 @@ jobs:
         # Create local.settings.json
         cp ./local.settings.sample.json ./local.settings.json
 
-        dir
+        cd ./outputs
 
         Start-Process -NoNewWindow func @("start","--verbose","false")
         Start-Sleep -s 60
