@@ -25,7 +25,7 @@ on:
       AZURE_STORAGE_NAME: 
         description: 'Azure storage account name'
         required: true
-        default: 'serverlesstest'
+        default: 'serverlessdev'
       CDN_PROFILE_NAME: 
         description: 'CDN profile name'
         required: true

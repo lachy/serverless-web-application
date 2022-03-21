@@ -21,19 +21,23 @@ on:
       API_DOCUMENT_URL: 
         description: 'API definition URL'
         required: true
-        default: 'https://serverlesstest-fn.azurewebsites.net/api/swagger.json'
+        default: 'https://serverless-dev.azureedge.net/swagger.json'
       APIM_NAME: 
         description: 'APIM name'
         required: true
-        default: 'serverlesstest-apim'
+        default: 'apim-serverless-dev'
       FUNCTION_NAME: 
         description: 'Azure Functions name'
         required: true
-        default: 'serverlesstest-fn'
+        default: 'fn-serverless-dev'
       ORIGIN_URL: 
         description: 'Client app URL' # This is CDN endpoint URL
         required: true
-        default: 'https://serverlesstest-cdn.azureedge.net'               
+        default: 'https://serverless-dev.azureedge.net'
+      AZURE_STORAGE_NAME: 
+        description: 'Azure storage account name'
+        required: true
+        default: 'serverlessdev'
   
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
@@ -87,6 +91,37 @@ jobs:
         dotnet build --configuration Release --output ./outputs
         popd
 
+    - name: Generate OpenAPI document
+      shell: pwsh
+      env:
+        OpenApi__HostNames: 'https://<azure-functions-app>.azurewebsites.net/api'
+        AZURE_FUNCTIONS_ENVIRONMENT: 'Production'
+      run: |
+        cd src/api/dotnet/${{ env.FUNCTION_NAME }}
+
+        mkdir outputs
+
+        # Create local.settings.json
+        cp ./local.settings.sample.json ./local.settings.json
+
+        Start-Process -NoNewWindow func @("start","--verbose","false")
+        Start-Sleep -s 60
+
+        Invoke-RestMethod -Method Get -Uri http://localhost:7071/api/swagger.json | ConvertTo-Json -Depth 100 | Out-File -FilePath outputs/swagger.json -Force
+
+        Get-Content -Path outputs/swagger.json -Raw
+
+        cd ../../../../
+
+    # Deploy swagger doc to the storage account
+    - name: Publish swagger doc storage account ${{ env.AZURE_STORAGE_NAME }}
+      uses: Azure/cli@1.0.4
+      with:
+        # Azure CLI version to be used to execute the script. If not provided, latest version is used
+        #azcliversion: 2.21.0
+        # Specify the script here
+        inlineScript: az storage blob upload -s ./${{ env.FUNCTION_NAME }}/outputs/swagger.json -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }} --overwrite true
+
     # Publish .NET application to Azure Function
     - name: Publish to Azure Functions to ${{ env.FUNCTION_NAME }}
       uses: Azure/functions-action@v1
@@ -94,7 +129,7 @@ jobs:
       with:
         app-name: ${{ env.FUNCTION_NAME }}
         package: ./${{ env.APP_SOURCE_PATH }}/${{ env.FUNCTIONAPP_PATH }}/outputs
-
+        
     # Validate and Build ARM Template from Bicep
     - name: Azure CLI - Validate Bicep file ${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
       uses: Azure/cli@1.0.4
