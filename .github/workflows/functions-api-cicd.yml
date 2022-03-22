@@ -115,14 +115,7 @@ jobs:
         #azcliversion: 2.27.2
         # Specify the script here
         inlineScript: |
-          if (az functionapp config access-restriction remove -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim)
-          {
-            "Removed apim rule"
-          }
-          else 
-          {
-            "Did not remove apim rule, probably because it does not exist?"
-          }
+          $result = az functionapp config access-restriction remove -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim
 
     # Deployment Bicep template for APIM API 
     - name: Import ${{ env.ENVIRONMENT_TYPE }} environment API to ${{ env.APIM_NAME }}
