@@ -107,8 +107,8 @@ jobs:
           az bicep upgrade
           az bicep build --file ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
 
-    # Disable network access restriction to allow only apim
-    - name: Azure CLI - Validate Bicep file ${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
+    # Delete network access restriction rule to whitelist apim
+    - name: Azure CLI - Remove network access restriction rule on ${{ env.APIM_NAME }}
       uses: Azure/cli@1.0.4
       continue-on-error: true
       with:
@@ -128,8 +128,8 @@ jobs:
         template: ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.json  # Set this to the location of your template file
         parameters: apimName=${{ env.APIM_NAME }} openApiUrl=${{ env.API_DOCUMENT_URL }} originUrl=${{ env.ORIGIN_URL }} apimApiName=${{ env.API_NAME }}
 
-    # Enable network access restriction to allow only apim
-    - name: Azure CLI - Validate Bicep file ${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
+    # Create network access restriction rule to whitelist apim
+    - name: Azure CLI - Create network access restriction rule on ${{ env.APIM_NAME }}
       uses: Azure/cli@1.0.4
       with:
         # Azure CLI version to be used to execute the script. If not provided, latest version is used
@@ -137,8 +137,8 @@ jobs:
         # Specify the script here
         inlineScript: |
           apimObj=$(az apim show --name ${{ env.APIM_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }})
-          jsonObj = $apimObj | ConvertFrom-Json
-          ipAddress = $jsonObj.publicIpAddresses
+          jsonObj=$($apimObj | ConvertFrom-Json)
+          ipAddress=$($jsonObj.publicIpAddresses)
           az functionapp config access-restriction add -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim --action Allow --ip-address $ipAddress --priority 200
 
     # Azure logout
