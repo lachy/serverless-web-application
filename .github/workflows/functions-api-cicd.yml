@@ -53,7 +53,7 @@ env:
   ORIGIN_URL: ${{ github.event.inputs.ORIGIN_URL }}
   APP_SOURCE_PATH: 'src'
   FUNCTIONAPP_PATH: 'api/dotnet/ToDoFunctionApp'
-  DOTNET_VERSION: '3.1.410'
+  DOTNET_VERSION: '6.0.x'
   BICEP_FILE_PATH: 'deploy'
   BICEP_FILE_NAME: 'api'
 

@@ -46,25 +46,28 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
 }
 
 resource plan 'Microsoft.Web/serverFarms@2020-06-01' = {
-  name: appServicePlanName
+  name: '${appServicePlanName}-linux'
   location: location
-  kind: functionKind
+  kind: 'linux'        // required for using linux
   tags: resourceTags
   sku: {
     name: functionSku
     tier: functionTier
   }
-  properties: {}
+  properties: {
+    reserved: true     // required for using linux
+  }
 }
 
 resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
   name: functionAppName
   location: location
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   tags: resourceTags
   properties: {
     serverFarmId: plan.id
     siteConfig: {
+      linuxFxVersion: 'DOTNET|6.0'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
@@ -88,7 +91,7 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
-          value: '~3'
+          value: '~4'
         }
         {
           name: 'KEY_VAULT_URI'

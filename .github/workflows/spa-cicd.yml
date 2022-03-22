@@ -73,30 +73,30 @@ jobs:
       uses: actions/checkout@v1
 
     # Run app registration against AAD using PowerShell script
-    - name: 'App Registration'
-      id: appRegistration
-      continue-on-error: true
-      shell: pwsh
-      run: |
-        .\${{ env.BICEP_FILE_PATH }}\scripts\appRegistrationAndPermission.ps1 `
-        -clientName ${{ env.APP_NAME_PREFIX }}${{ env.ENVIRONMENT_TYPE }} `
-        -apiName fn-${{ env.APP_NAME_PREFIX }}-${{ env.ENVIRONMENT_TYPE }} `
-        -resourceGroup ${{ env.APP_NAME_PREFIX }}-${{ env.ENVIRONMENT_TYPE }}-rg `
-        -staticWebURL https://${{ env.APP_NAME_PREFIX }}-${{ env.ENVIRONMENT_TYPE }}.azureedge.net
+    # - name: 'App Registration'
+    #   id: appRegistration
+    #   continue-on-error: true
+    #   shell: pwsh
+    #   run: |
+    #     .\${{ env.BICEP_FILE_PATH }}\scripts\appRegistrationAndPermission.ps1 `
+    #     -clientName ${{ env.APP_NAME_PREFIX }}${{ env.ENVIRONMENT_TYPE }} `
+    #     -apiName fn-${{ env.APP_NAME_PREFIX }}-${{ env.ENVIRONMENT_TYPE }} `
+    #     -resourceGroup ${{ env.APP_NAME_PREFIX }}-${{ env.ENVIRONMENT_TYPE }}-rg `
+    #     -staticWebURL https://${{ env.APP_NAME_PREFIX }}-${{ env.ENVIRONMENT_TYPE }}.azureedge.net
 
-    # Set app configurations of Angular
-    - name: 'Replace tokens'
-      uses: cschleiden/replace-tokens@v1.0
-      with:
-        tokenPrefix: '__'
-        tokenSuffix: '__'
-        files: ${{ github.workspace }}/${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/src/app/app-config.json
-      env: 
-        clientAppId: ${{ steps.appRegistration.outputs.clientId }}
-        clientAppURL: ${{ env.CLIENT_URL }}
-        apimURL: ${{ env.API_URL }}
-        backendAPIScope: ${{ steps.appRegistration.outputs.scope }}
-        tenantDomainName: ${{ steps.appRegistration.outputs.tenantDomainName }}
+    # # Set app configurations of Angular
+    # - name: 'Replace tokens'
+    #   uses: cschleiden/replace-tokens@v1.0
+    #   with:
+    #     tokenPrefix: '__'
+    #     tokenSuffix: '__'
+    #     files: ${{ github.workspace }}/${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/src/app/app-config.json
+    #   env: 
+    #     clientAppId: ${{ steps.appRegistration.outputs.clientId }}
+    #     clientAppURL: ${{ env.CLIENT_URL }}
+    #     apimURL: ${{ env.API_URL }}
+    #     backendAPIScope: ${{ steps.appRegistration.outputs.scope }}
+    #     tenantDomainName: ${{ steps.appRegistration.outputs.tenantDomainName }}
     
     # Setup Node.js environment
     - name: Setup Node.js ${{ env.NODE_VERSION }} environment
@@ -104,14 +104,14 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
     
-    # Build Angular application
-    - name: Build Angular application
-      run: |
-        pushd ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}
-        npm install
-        npm install -g @angular/cli
-        ng build -c=production --output-path=./dist
-        popd
+    # # Build Angular application
+    # - name: Build Angular application
+    #   run: |
+    #     pushd ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}
+    #     npm install
+    #     npm install -g @angular/cli
+    #     ng build -c=production --output-path=./dist
+    #     popd
     
     # Deploy Angular application to Storage Account
     - name: Publish static website to Azure storage account ${{ env.AZURE_STORAGE_NAME }}
