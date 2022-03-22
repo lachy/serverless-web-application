@@ -53,6 +53,7 @@ env:
   CDN_ENDPOINT_NAME: ${{ github.event.inputs.CDN_ENDPOINT_NAME }}
   APP_SOURCE_PATH: 'src'
   ANGULAR_PATH: 'client/angular/ToDoSpa'
+  REACT_PATH:  'client/react/Auth0Spa'
   NODE_VERSION: '14'
   BICEP_FILE_PATH: 'deploy'
 
@@ -113,14 +114,22 @@ jobs:
     #     ng build -c=production --output-path=./dist
     #     popd
     
-    # Deploy Angular application to Storage Account
+    # Build React application
+    - name: Build React application
+      run: |
+        pushd ./${{ env.APP_SOURCE_PATH }}/${{ env.REACT_PATH }}
+        npm install
+        npm run build
+        popd
+    
+    # Deploy React application to Storage Account
     - name: Publish static website to Azure storage account ${{ env.AZURE_STORAGE_NAME }}
       uses: Azure/cli@1.0.4
       with:
         # Azure CLI version to be used to execute the script. If not provided, latest version is used
         #azcliversion: 2.21.0
         # Specify the script here
-        inlineScript: az storage blob upload-batch -s ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/dist -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }} --overwrite true
+        inlineScript: az storage blob upload-batch -s ./${{ env.APP_SOURCE_PATH }}/${{ env.ANGULAR_PATH }}/build -d '$web' --account-name ${{ env.AZURE_STORAGE_NAME }} --overwrite true
 
     # Purge CDN endpoint
     - name: Purge CDN endpoint on ${{ env.CDN_ENDPOINT_NAME }}
