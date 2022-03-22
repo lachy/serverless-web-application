@@ -136,9 +136,9 @@ jobs:
         #azcliversion: 2.27.2
         # Specify the script here
         inlineScript: |
-          apim=az apim show --name ${{ env.APIM_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }}
-          json = $apim | ConvertFrom-Json
-          ipAddress = $json.publicIpAddresses
+          apimObj=$(az apim show --name ${{ env.APIM_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }})
+          jsonObj = $apimObj | ConvertFrom-Json
+          ipAddress = $jsonObj.publicIpAddresses
           az functionapp config access-restriction add -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim --action Allow --ip-address $ipAddress --priority 200
 
     # Azure logout
