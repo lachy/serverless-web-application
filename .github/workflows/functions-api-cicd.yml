@@ -107,6 +107,23 @@ jobs:
           az bicep upgrade
           az bicep build --file ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
 
+    # Disable network access restriction to allow only apim
+    - name: Azure CLI - Validate Bicep file ${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
+      uses: Azure/cli@1.0.4
+      with:
+        # Azure CLI version to be used to execute the script. If not provided, latest version is used
+        #azcliversion: 2.27.2
+        # Specify the script here
+        inlineScript: |
+          if (az functionapp config access-restriction remove -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim)
+          {
+            "Removed apim rule"
+          }
+          else 
+          {
+            "Did not remove apim rule, probably because it does not exist?"
+          }
+
     # Deployment Bicep template for APIM API 
     - name: Import ${{ env.ENVIRONMENT_TYPE }} environment API to ${{ env.APIM_NAME }}
       id: apiDeployment
@@ -116,6 +133,19 @@ jobs:
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.json  # Set this to the location of your template file
         parameters: apimName=${{ env.APIM_NAME }} openApiUrl=${{ env.API_DOCUMENT_URL }} originUrl=${{ env.ORIGIN_URL }} apimApiName=${{ env.API_NAME }}
+
+    # Enable network access restriction to allow only apim
+    - name: Azure CLI - Validate Bicep file ${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
+      uses: Azure/cli@1.0.4
+      with:
+        # Azure CLI version to be used to execute the script. If not provided, latest version is used
+        #azcliversion: 2.27.2
+        # Specify the script here
+        inlineScript: |
+          $apim=az apim show --name ${{ env.APIM_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }}
+          $json = $apim | ConvertFrom-Json
+          $ipAddress = $json.publicIpAddresses
+          az functionapp config access-restriction add -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim --action Allow --ip-address $ipAddress --priority 200
 
     # Azure logout
     - name: logout

@@ -357,3 +357,5 @@ vscode/
 dist/
 
 *.copy.*
+
+.idea/
