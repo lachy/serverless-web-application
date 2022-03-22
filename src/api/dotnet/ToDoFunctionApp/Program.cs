@@ -1,10 +1,13 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using Azure;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Functions.Worker.Configuration;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace ToDoFunctionApp
 {
@@ -25,14 +28,20 @@ namespace ToDoFunctionApp
                             true)
                         .AddEnvironmentVariables();
                 })
-                .ConfigureServices(services =>
+                .ConfigureServices((context, services) =>
                 {
+                    services.AddSingleton((s) =>
+                    {
+                        // Use System Managed Identity to get access to the Key Vault
+                        SecretClient kvClient = new SecretClient(new Uri(context.Configuration[Constants.kvUri]), new DefaultAzureCredential());
+                        Response<KeyVaultSecret> secret = kvClient.GetSecret(context.Configuration[Constants.kvSecretName]);
+                        MongoClient client = new MongoClient(secret.Value.Value);
+                        return client;
+                    });
                 })
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .Build();
             
-            
-
             host.Run();
         }
     }

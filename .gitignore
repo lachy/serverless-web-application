@@ -353,7 +353,7 @@ MigrationBackup/
 
 # VS Code settings folder
 vscode/
-.vscode/
+
 dist/
 
 *.copy.*
