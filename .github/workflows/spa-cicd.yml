@@ -58,7 +58,7 @@ env:
   BICEP_FILE_PATH: 'deploy'
 
 jobs:
-  angular_cicd:
+  spa_cicd:
     runs-on: ubuntu-latest
     steps:
     # Authentication
