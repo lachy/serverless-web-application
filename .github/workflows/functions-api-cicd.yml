@@ -137,7 +137,7 @@ jobs:
         # Specify the script here
         inlineScript: |
           apimObj=$(az apim show --name ${{ env.APIM_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }})
-          ipAddress=$($apimObj.publicIpAddresses)
+          ipAddress=$apimObj.publicIpAddresses
           az functionapp config access-restriction add -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.FUNCTION_NAME }} --rule-name apim --action Allow --ip-address $ipAddress --priority 200
 
     # Azure logout
