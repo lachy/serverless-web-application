@@ -81,7 +81,7 @@ jobs:
         deploymentName: ${{ github.run_number }}
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.json  # Set this to the location of your template file
-        parameters: appNameSuffix=${{ env.APP_NAME_PREFIX }} environmentType=${{ env.ENVIRONMENT_TYPE }} userAssignedIdentityName=${{ env.MSI_NAME }} userAssignedIdentityResourceGroup=${{ env.MSI_RESOURCE_GROUP }}
+        parameters: appNameSuffix=${{ env.APP_NAME_PREFIX }} environmentType=${{ env.ENVIRONMENT_TYPE }} userAssignedIdentityName=${{ env.MSI_NAME }} userAssignedIdentityResourceGroup=${{ env.MSI_RESOURCE_GROUP }} apiSecret=${{ secrets.TODO_API_SECRET }}
 
     # Azure logout
     - name: logout

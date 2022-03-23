@@ -106,7 +106,7 @@ jobs:
           az deployment group validate -g ${{ env.RESOURCE_GROUP_NAME }} \
           --template-file ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep \
           --parameters apimName=${{ env.APIM_NAME }} openApiUrl=${{ env.API_DOCUMENT_URL }} \
-          originUrl=${{ env.ORIGIN_URL }} apiSecret=${{ secrets.TODO_API_SECRET }}
+          originUrl=${{ env.ORIGIN_URL }}
 
           az bicep upgrade
           az bicep build --file ./${{ env.BICEP_FILE_PATH }}/${{ env.BICEP_FILE_NAME }}.bicep
