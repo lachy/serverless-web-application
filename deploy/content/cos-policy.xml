@@ -14,6 +14,15 @@
                 <header>*</header>
             </expose-headers>
         </cors>
+        <validate-jwt header-name="Authorization" require-scheme="Bearer">
+            <openid-config url="https://dev-f-rourrc.us.auth0.com/.well-known/openid-configuration" />
+            <audiences>
+                <audience>https://todos</audience>
+            </audiences>
+            <issuers>
+                <issuer>https://dev-f-rourrc.us.auth0.com/</issuer>
+            </issuers>
+        </validate-jwt>
     </inbound>
     <backend>
         <forward-request />
