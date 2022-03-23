@@ -9,7 +9,6 @@ param originUrl string
 
 @description('API friendly name')
 param apimApiName string = '2do'
-
 module apimOpenApi 'modules/apimOpenAPI.bicep' = {
   name: 'apimOpenAPI'
   params: {

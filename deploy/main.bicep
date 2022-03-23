@@ -15,6 +15,9 @@ param createApim bool = true
 @description('APIM name')
 param apimName string = 'apim-${appNameSuffix}-${environmentType}'
 
+@description('APIM secret')
+param apiSecret string = ''
+
 @description('APIM resource group')
 param apimResourceGroup string = resourceGroup().name
 
@@ -163,6 +166,7 @@ module apimApi 'modules/apimAPI.bicep' = {
     currentResourceGroup: resourceGroup().name
     backendApiName: functionApp.outputs.functionAppName
     apiName: apimApiName
+    apiSecret: apiSecret
     originUrl: cdn.outputs.cdnEndpointURL
   }
 }

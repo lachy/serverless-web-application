@@ -3,6 +3,7 @@ param currentResourceGroup string
 param backendApiName string
 param apiName string
 param originUrl string
+param apiSecret string
 
 var functionAppKeyName = '${backendApiName}-key'
 
@@ -47,6 +48,35 @@ resource backendApi 'Microsoft.ApiManagement/service/backends@2021-01-01-preview
   }
 }
 
+resource authorizationServer 'Microsoft.ApiManagement/service/authorizationServers@2021-04-01-preview' = {
+  name: 'auth0'
+  parent: apim
+  properties: {
+    authorizationEndpoint: 'https://dev-f-rourrc.us.auth0.com/authorize'
+    authorizationMethods: [
+      'GET'
+      'POST'
+    ]
+    bearerTokenSendingMethods: [
+      'authorizationHeader'
+    ]
+    clientAuthenticationMethod: [
+      'Body'
+      'Basic'
+    ]
+    clientId: 'pn5l2sKfRWV3bRaS0creZ6uZLyBEMcow'
+    clientRegistrationEndpoint: 'https://serverless-dev.azureedge.net'
+    clientSecret: apiSecret
+    description: 'auth0 identity provider'
+    displayName: 'auth0'
+    grantTypes: [
+      'authorizationCode'
+    ]
+    tokenBodyParameters: []
+    tokenEndpoint: 'https://dev-f-rourrc.us.auth0.com/oauth/token'
+  }
+}
+
 resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
   parent: apim
   name: apiName
@@ -58,6 +88,11 @@ resource api 'Microsoft.ApiManagement/service/apis@2021-01-01-preview' = {
     protocols: [
       'https'
     ]
+    authenticationSettings: {
+      oAuth2: {
+        authorizationServerId: 'auth0'
+      }
+    }
   }
 }
 
