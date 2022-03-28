@@ -53,7 +53,7 @@ env:
   CDN_ENDPOINT_NAME: ${{ github.event.inputs.CDN_ENDPOINT_NAME }}
   APP_SOURCE_PATH: 'src'
   ANGULAR_PATH: 'client/angular/ToDoSpa'
-  REACT_PATH:  'client/react/Auth0Spa'
+  REACT_PATH:  'client/react'
   NODE_VERSION: '14'
   BICEP_FILE_PATH: 'deploy'
 
