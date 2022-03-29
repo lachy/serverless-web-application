@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from 'react-redux';
 import { displayError } from '../actions/shared';
 
-const apiUrl = process.env.REACT_APP_API_URL as string;
+const apiUrl = process.env.REACT_APP_SERVER_URL as string;
 const api = axios.create({
   baseURL: apiUrl,
 });
