@@ -30,15 +30,15 @@ const useAxios = () => {
 
   return {
     get: async (url: string, config?: AxiosRequestConfig<any> | undefined)
-    : Promise<AxiosResponse> => axios.get(url, config),
+    : Promise<AxiosResponse> => api.get(url, config),
     del: async (url: string, config?: AxiosRequestConfig<any> | undefined)
-    : Promise<AxiosResponse> => axios.delete(url, config),
+    : Promise<AxiosResponse> => api.delete(url, config),
     post: async (url: string, data?: any, config?: AxiosRequestConfig<any> | undefined)
-    : Promise<AxiosResponse> => axios.post(url, data, config),
+    : Promise<AxiosResponse> => api.post(url, data, config),
     put: async (url: string, data?: any, config?: AxiosRequestConfig<any> | undefined)
-    : Promise<AxiosResponse> => axios.put(url, data, config),
+    : Promise<AxiosResponse> => api.put(url, data, config),
     patch: async (url: string, data?: any, config?: AxiosRequestConfig<any> | undefined)
-    : Promise<AxiosResponse> => axios.patch(url, data, config),
+    : Promise<AxiosResponse> => api.patch(url, data, config),
   };
 };
 
