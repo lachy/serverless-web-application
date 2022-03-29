@@ -21,7 +21,7 @@ on:
       API_URL: 
         description: 'API on APIM URL'
         required: true
-        default: 'https://apim-serverless-dev.azure-api.net/2do'
+        default: 'https://apim-serverless-dev.azure-api.net/api'
       AZURE_STORAGE_NAME: 
         description: 'Azure storage account name'
         required: true
